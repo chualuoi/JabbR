@@ -1163,6 +1163,12 @@
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="Content\images\splash-logo.png" />
+    <Content Include="Content\mediacontrols.css">
+      <DependentUpon>mediacontrols.less</DependentUpon>
+    </Content>
+    <Content Include="Content\mediacontrols.min.css">
+      <DependentUpon>mediacontrols.css</DependentUpon>
+    </Content>
     <Content Include="Content\sounds\notification.mp3" />
     <Content Include="Content\themes\default\Chat.bbcnews.css" />
     <Content Include="Content\themes\default\Chat.css" />
@@ -1179,9 +1185,6 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome-ie7.min.css" />
-    <Content Include="Content\font-awesome.css" />
-    <Content Include="Content\font-awesome.min.css" />
-    <Content Include="Content\font\fontawesome-webfont.svg" />
     <Content Include="Content\images\close-icon-hover.png" />
     <Content Include="Content\images\close-icon.png" />
     <Content Include="Content\images\contentproviders\bbcnews-header.png" />
@@ -1233,14 +1236,14 @@
     <Content Include="Chat.githubissues.js" />
     <Content Include="Content\themes\default\Chat.githubissues.css" />
     <Content Include="Content\themes\default\Chat.nuget.css" />
-    <Content Include="css\font-awesome.css" />
-    <Content Include="css\font-awesome.min.css" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Content\images\big-logo.png" />
     <Content Include="Content\images\logo32.png" />
     <Content Include="Content\images\small-logo.png" />
     <Content Include="Content\sounds\notification.wav" />
-    <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="loader.js" />
     <Content Include="notifications.js" />
     <Content Include="notifications.unreadcounter.js" />
@@ -1265,10 +1268,6 @@
     <EmbeddedResource Include="Migrations\201301262237296_FixProviderName.resx">
       <DependentUpon>201301262237296_FixProviderName.cs</DependentUpon>
     </EmbeddedResource>
-    <Content Include="Content\font\fontawesome-webfont.eot" />
-    <Content Include="Content\font\fontawesome-webfont.ttf" />
-    <Content Include="Content\font\fontawesome-webfont.woff" />
-    <Content Include="Content\font\FontAwesome.otf" />
     <EmbeddedResource Include="Migrations\201303220549121_ContentProviderContent.resx">
       <DependentUpon>201303220549121_ContentProviderContent.cs</DependentUpon>
     </EmbeddedResource>
@@ -1311,11 +1310,17 @@
     <EmbeddedResource Include="Migrations\201310240539050_AddPrecision.resx">
       <DependentUpon>201310240539050_AddPrecision.cs</DependentUpon>
     </EmbeddedResource>
-    <Content Include="fonts\FontAwesome.otf" />
-    <Content Include="fonts\fontawesome-webfont.woff2" />
-    <Content Include="fonts\fontawesome-webfont.woff" />
-    <Content Include="fonts\fontawesome-webfont.ttf" />
-    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\FontAwesome.otf" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\mediacontrols.less" />
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
+    <None Include="Properties\PublishProfiles\herewithme.pubxml" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
     <Content Include="Scripts\highlight.pack.js" />
     <Content Include="Scripts\jquery-2.0.3.js" />
@@ -1817,7 +1822,9 @@
   <ItemGroup>
     <Content Include="Chat.emoji.js" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

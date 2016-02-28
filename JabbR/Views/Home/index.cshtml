@@ -14,6 +14,7 @@
     <link href="@Url.Content("~/Content/images/logo32.png")" rel="icon" type="image/png" sizes="32x32">
     <link href="@Url.Content("~/Content/images/logo64.png")" rel="icon" type="image/png" sizes="64x64">
     <link href="@Url.Content("~/favicon.ico")" rel="shortcut icon" type="image/x-icon" sizes="16x16">
+    
     @{ 
         WriteLiteral(Bundle.Css().ForceDebugIf(() => Model.DebugMode)
             .Add("~/Content/bootstrap.min.css")
@@ -27,6 +28,7 @@
             .Add("~/Content/Highlight/github.css")
             .Add("~/Content/KeyTips.css")
             .Add("~/Content/emoji20.css")
+            .Add("~/Content/mediacontrols.css")
             .Render("~/Content/JabbR_#.css"));
    }
 
@@ -82,10 +84,10 @@
                     <div class="name">${name}</div>
                 </div>
                 {{/if}}
-                <span class="resend hide"><i class="icon-repeat" title="resend failed message"></i></span>
+                <span class="resend hide"><i class="fa fa-repeat" title="resend failed message"></i></span>
                 <span class="state">
-                    <span class="hide send-pending"><i class="icon-spin icon-repeat"></i></span>
-                    <span class="hide send-failed"><i class="icon-warning-sign"></i></span>
+                    <span class="hide send-pending"><i class="fa fa-spin fa fa-repeat"></i></span>
+                    <span class="hide send-failed"><i class="fa fa-warning-sign"></i></span>
                 </span>
             </div>
             <div class="middle{{if showUser}} first{{/if}}">
@@ -130,8 +132,8 @@
             <div class="row-fluid room-row">
                 <div class="span3">
                     <span class="name">${Name}</span>
-                    <span class="lock"><i class="icon-lock"></i></span>
-                    <span class="readonly"><i class="icon-ban-circle"></i></span>
+                    <span class="lock"><i class="fa fa-lock"></i></span>
+                    <span class="readonly"><i class="fa fa-ban-circle"></i></span>
                 </div>
                 <div class="span4">
                     <span class="topic">{{html processedTopic}}</span>
@@ -190,8 +192,8 @@
     <script id="new-tab-template" type="text/x-jquery-tmpl">
         <li id="tabs-${id}" class="room" data-name="${name}" data-closed="${closed}" data-trimmable="true" role="tab">
             <a> 
-                <i class="icon-lock lock hide"></i>
-                <i class="icon-ban-circle readonly hide"></i>
+                <i class="fa fa-lock lock hide"></i>
+                <i class="fa fa-ban-circle readonly hide"></i>
                 <span class="content">${name}</span>
                 <button class="close">&times;</button>
             </a>
@@ -224,7 +226,7 @@
                 <h3>${Title}</h3>
             </div>
             <div class="modal-body">
-                {{if Icon}}<i class="${Icon} icon-4x pull-left"></i>{{/if}}
+                {{if Icon}}<i class="${Icon} fa fa-4x pull-left"></i>{{/if}}
                 {{html Body}}
             </div>
             <div class="modal-footer">
@@ -328,6 +330,70 @@
         </div>
     </script>
     <!--/Gravatar Profile Template-->
+
+    <!--Media player template-->
+    <script id="media-player-template" type="text/x-jquery-tmpl">
+        <div class="media-player-container" style="position: absolute">
+            <iframe class="media-player" height="360" width="640" src="${src}">
+            </iframe>
+            <div class="media-controls">
+                <div class="slider ng-isolate-scope">
+                    <div class="track"></div>
+                    <div class="statusTrack"></div>
+                    <div class="leftTrack"></div>
+                    <div class="bubble"><div class="label ng-binding"></div></div>
+                </div>
+                <nav class="navbar navbar-default" role="navigation">
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                        <ul class="nav navbar-nav">
+                            <li>
+                                <button type="button" class="btn btn-default navbar-btn">
+                                    <i class="fa fa-fw fa-play"></i>
+                                </button>
+                                <button type="button" class="btn btn-default navbar-btn ng-hide">
+                                    <i class="fa fa-fw fa-pause"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button class="btn btn-default navbar-btn">
+                                    <i class="fa fa-fw fa-fast-forward"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <p class="navbar-text ng-binding"></p>
+                            </li>
+
+                            <li>
+                                <p class="navbar-text">
+                                    <i class="fa fa-fw fa-volume-up"></i>
+                                </p>
+
+                                <div class="navbar-volume-slider slider ng-isolate-scope">
+                                    <div class="track"></div>
+                                    <div class="statusTrack" style="width: 0px;"></div>
+                                    <div class="leftTrack" style="width: 98px;"></div>
+                                    <div class="bubble" style="left: 83px;"><div class="label ng-binding"></div></div>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown" data-dropdown="">
+                                <a href="#" class="dropdown-toggle" data-dropdown-toggle="" aria-haspopup="true" aria-expanded="false">
+                                    <span data-ng-bind-html="videoQualityNames[currentQualityLevel]" class="ng-binding">480p</span>&nbsp;<span class="fa fa-caret-down"></span>
+                                </a>
+                                <ul class="dropdown-menu" role="menu"></ul>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </script>
+    <!--/Media player template-->
 </head>
 <body class="home@(Model.IsAdmin ? " home-admin" : "")">
     <section id="page" role="application">
@@ -347,29 +413,29 @@
             <div id="main-menu" class="pull-right">
                 <div id="tabs-dropdown-container" role="tablist">
                     <button class="dropdown-toggle" data-toggle="dropdown" id="tabs-dropdown-rooms">
-                        <i class="icon-chevron-down"></i>
+                        <i class="fa fa-chevron-down"></i>
                     </button>
                   
                     <ul id="tabs-dropdown" class="dropdown-menu pull-right" aria-labelledby="tabs-dropdown-rooms">
                     </ul>
                 </div>
                 <div id="connectionStatus" class="connection-status" data-toggle="popover" data-placement="bottom">
-                    <i class="icon-connection-status"></i>
-                <div id="connection-info-popover" class="popover"><div class="arrow"></div><div class="popover-inner"><i class="popover-title-icon icon-globe" style="display: none;"></i><h3 class="popover-title" style="display: none;"></h3><div class="popover-content"><p></p></div></div></div>
+                    <i class="fa fa-connection-status"></i>
+                <div id="connection-info-popover" class="popover"><div class="arrow"></div><div class="popover-inner"><i class="popover-title-icon fa fa-globe" style="display: none;"></i><h3 class="popover-title" style="display: none;"></h3><div class="popover-content"><p></p></div></div></div>
                 <div id="connection-info-content" style="display: none;"><p id="connection-status"></p><p id="connection-transport"></p></div>
                 <div id="connection-state-changed-popover" class="popover"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title" style="display: none;"></h3><i id="popover-content-icon"></i><div class="popover-content"><p></p></div></div></div>
                 </div>
                 <div id="preferences" class="navbar account pull-right">
                     <div class="navbar-inner">
                         <ul class="nav">
-                            <li><a id="notifications" class="" title="@LanguageResources.Client_Notifications" href="@Url.Content("~/notifications")" target="_blank"><i class="icon-comments"></i><span id="notification-unread-count" class="badge badge-info"></span></a></li>
-                            <li><a class="" title="@LanguageResources.Client_AccountSettings" href="@Url.Content("~/account")" target="_blank"><i class="icon-user"></i></a></li>
+                            <li><a id="notifications" class="" title="@LanguageResources.Client_Notifications" href="@Url.Content("~/notifications")" target="_blank"><i class="fa fa-comments"></i><span id="notification-unread-count" class="badge badge-info"></span></a></li>
+                            <li><a class="" title="@LanguageResources.Client_AccountSettings" href="@Url.Content("~/account")" target="_blank"><i class="fa fa-user"></i></a></li>
                             @if (Model.IsAdmin)
                             {
-                                <li><a class="" title="@LanguageResources.Client_JabbrSettings" href="@Url.Content("~/administration")" target="_blank"><i class="icon-cog"></i></a></li>
+                                <li><a class="" title="@LanguageResources.Client_JabbrSettings" href="@Url.Content("~/administration")" target="_blank"><i class="fa fa-cog"></i></a></li>
                             }
-                            <li><a class="help" aria-haspopup="true" title="@LanguageResources.Client_DisplayHelp"><i class="icon-question-sign"></i></a></li>
-                            <li><a class="logout" title="@LanguageResources.Client_SignOut"><i class="icon-signout"></i></a></li>
+                            <li><a class="help" aria-haspopup="true" title="@LanguageResources.Client_DisplayHelp"><i class="fa fa-question-sign"></i></a></li>
+                            <li><a class="logout" title="@LanguageResources.Client_SignOut"><i class="fa fa-signout"></i></a></li>
                         </ul>
                     </div>
                 </div>
@@ -385,17 +451,17 @@
                 @if (Model.AllowRoomCreation)
                 {
                     <div id="create-room" class="btn-group pull-right">
-                        <button class="btn btn-small"><i class="icon-plus"></i> Create Room</button>
+                        <button class="btn btn-small"><i class="fa fa-plus"></i> Create Room</button>
                     </div>
                 }
             </form>
             <div id="room-actions" class="btn-group pull-right">
                 <button class="btn btn-small dropdown-toggle" data-toggle="dropdown">@LanguageResources.Client_RoomSettings <span class="caret"></span></button>
                 <ul id="room-preferences" class="dropdown-menu">
-                    <li><a class="sound" title="audible notifications"><i class="icon-sound"></i> @LanguageResources.Client_AudibleNotifications</a></li>
-                    <li><a class="richness" title="toggle rich-content"><i class="icon-richness"></i> @LanguageResources.Client_ToggleRichContent</a></li>
-                    <li><a class="toast" title="popup notifications" aria-haspopup="true"><i class="icon-toast"></i> @LanguageResources.Client_PopupNotifications</a></li>
-                    <li><a class="download" title="download messages" aria-haspopup="true"><i class="icon-download"></i> @LanguageResources.Client_DownloadMessages</a></li>
+                    <li><a class="sound" title="audible notifications"><i class="fa fa-sound"></i> @LanguageResources.Client_AudibleNotifications</a></li>
+                    <li><a class="richness" title="toggle rich-content"><i class="fa fa-richness"></i> @LanguageResources.Client_ToggleRichContent</a></li>
+                    <li><a class="toast" title="popup notifications" aria-haspopup="true"><i class="fa fa-toast"></i> @LanguageResources.Client_PopupNotifications</a></li>
+                    <li><a class="download" title="download messages" aria-haspopup="true"><i class="fa fa-download"></i> @LanguageResources.Client_DownloadMessages</a></li>
                 </ul>
             </div>
             <div id="room-loading">
@@ -413,7 +479,7 @@
                     <h2 class="userlist-header nav-header">@LanguageResources.Client_Rooms</h2>
                     <ul id="userlist-lobby" data-empty-message="@LanguageResources.Client_NoMatchingRooms">
                     </ul>
-                    <div id="load-more-rooms-item" class="room" style="display:none;"><div class="row-fluid room-row load-more-rooms"><i class="icon-spinner" style="display:none;"></i><a href="#">@LanguageResources.Client_LoadMore</a></div></div>
+                    <div id="load-more-rooms-item" class="room" style="display:none;"><div class="row-fluid room-row load-more-rooms"><i class="fa fa-spinner" style="display:none;"></i><a href="#">@LanguageResources.Client_LoadMore</a></div></div>
                 </div>
                 <ul id="messages-lobby" class="messages current" role="log" style="visibility: hidden;">
                 </ul>
@@ -431,7 +497,7 @@
             <input type="hidden" id="file-connection-id" name="connectionId" />
             <input type="hidden" id="file-message-id" name="messageId" />
             <input type="hidden" id="file-room" name="room" />
-            <div class="btn upload-button icon-cloud-upload icon-large">
+            <div class="btn upload-button fa fa-cloud-upload fa fa-large">
                 <input type="file" id="hidden-file" name="data">
             </div>
         </form>
@@ -517,7 +583,7 @@
                 <button type="button" class="close" data-dismiss="alert">&times;</button><a href="#">@LanguageResources.Client_LoadMissingMessages</a>
             </div>
             <div id="loadingRoomHistory" class="loading-room-history alert alert-info">
-                <i class="icon-spinner icon-spin"></i> @LanguageResources.Client_LoadingPreviousMessages
+                <i class="fa fa-spinner fa fa-spin"></i> @LanguageResources.Client_LoadingPreviousMessages
             </div>
             <div id="splash-screen" class="splash-screen-overlay">
                 <div class="jabbr-splash-logo"></div>
@@ -566,6 +632,8 @@
         @Html.Raw(Model.ClientLanguageResources)
       };
     </script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+  
     @{
         WriteLiteral(Bundle.JavaScript().ForceDebugIf(() => Model.DebugMode)
             .Add("~/Scripts/jQuery.tmpl.min.js")

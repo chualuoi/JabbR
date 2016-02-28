@@ -1050,6 +1050,11 @@
         ui.updateTabOrder(tabOrder);
     };
 
+    //media command
+    chat.client.updateVideoLocation = function (currentTime, room) {
+        $ui.updateVideoLocation(currentTime, room);
+    };
+
     $ui.bind(ui.events.typing, function () {
         // If not in a room, don't try to send typing notifications
         if (!chat.state.activeRoom) {
@@ -1136,6 +1141,12 @@
 
         // REVIEW: should this pop items off the top after a certain length?
         historyLocation = messageHistory.length;
+    });
+
+    $ui.bind(ui.events.seekVideo, function (ev, currentTime) {
+        try {
+            chat.server.seekVideo(currentTime, chat.state.activeRoom);
+        } catch (e) { }
     });
 
     $ui.bind(ui.events.focusit, function () {

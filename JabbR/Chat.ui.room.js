@@ -7,13 +7,14 @@
         return '[data-name="' + userName + '"]';
     }
 
-    function Room($tab, $usersContainer, $usersOwners, $usersActive, $messages, $roomTopic) {
+    function Room($tab, $usersContainer, $usersOwners, $usersActive, $messages, $roomTopic, $mediaPlayer) {
         this.tab = $tab;
         this.users = $usersContainer;
         this.owners = $usersOwners;
         this.activeUsers = $usersActive;
         this.messages = $messages;
         this.roomTopic = $roomTopic;
+        this.mediaPlayer = $mediaPlayer;
 
         this.templates = {
             separator: $('#message-separator-template')
@@ -170,6 +171,7 @@
 
         this.roomTopic.addClass('current')
                   .show();
+        //this.mediaPlayer.addClass('current').show();
 
         // if no unread since last separator
         // remove previous separator

@@ -152,7 +152,8 @@
                         $('#userlist-' + roomId + '-owners'),
                         $('#userlist-' + roomId + '-active'),
                         $('#messages-' + roomId),
-                        $('#roomTopic-' + roomId));
+                        $('#roomTopic-' + roomId),
+                        $('#media-player-' + roomId));
         return room;
     }
 
@@ -401,6 +402,8 @@
                               .addClass('roomTopic')
                               .appendTo($chatArea)
                               .hide();
+        templates.mediaContainer.tmpl({ src: "http://www.youtube.com/embed/nOEw9iiopwI" })
+            .appendTo($chatArea);
 
         userContainer = $('<div/>').attr('id', 'userlist-' + roomId)
             .addClass('users')
@@ -755,6 +758,11 @@
         $lobbyRoomFilterForm.submit();
     }
 
+    function triggerSeekVideo(currentTime) {
+        $ui.trigger($ui.events.seekVideo, [currentTime])
+    };
+
+    
     var ui = {
 
         //lets store any events to be triggered as constants here to aid intellisense and avoid
@@ -774,7 +782,12 @@
             loggedOut: 'jabbr.ui.loggedOut',
             reloadMessages: 'jabbr.ui.reloadMessages',
             fileUploaded: 'jabbr.ui.fileUploaded',
-            tabOrderChanged: 'jabbr.ui.tabOrderChanged'
+            tabOrderChanged: 'jabbr.ui.tabOrderChanged',
+            pauseVideo: 'jabbr.ui.pauseVideo',
+            playVideo: 'jabbr.ui.playVideo',
+            seekVideo: 'jabbr.ui.seekVideo',
+            endVideo: 'jabbr.ui.endVideo',
+            nextVideo: 'jabbr.ui.pauseVideo'
         },
 
         help: {
@@ -826,7 +839,8 @@
                 lobbyroom: $('#new-lobby-room-template'),
                 otherlobbyroom: $('#new-other-lobby-room-template'),
                 commandConfirm: $('#command-confirm-template'),
-                modalMessage: $('#modal-message-template')
+                modalMessage: $('#modal-message-template'),
+                mediaContainer: $('#media-player-template')
             };
             $reloadMessageNotification = $('#reloadMessageNotification');
             $fileUploadButton = $('.upload-button');
@@ -2580,6 +2594,11 @@
         },
         hideSplashScreen: function () {
             $splashScreen.fadeOut('slow');
+        },
+        updateVideoLocation: function (currentTime, roomName) {
+            var room = getRoomElements(roomName);
+            var mediaPlayer = $(room.mediaPlayer).mediaelementplayer();
+            mediaPlayer.setCurrentTime(currentTime);
         }
     };
 
