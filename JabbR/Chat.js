@@ -1052,7 +1052,7 @@
 
     //media command
     chat.client.updateVideoLocation = function (currentTime, room) {
-        $ui.updateVideoLocation(currentTime, room);
+        ui.updateVideoLocation(currentTime, room);
     };
 
     $ui.bind(ui.events.typing, function () {

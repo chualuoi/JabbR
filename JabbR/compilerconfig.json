@@ -2,5 +2,9 @@
   {
     "outputFile": "Content/mediacontrols.css",
     "inputFile": "Content/mediacontrols.less"
+  },
+  {
+    "outputFile": "Content/themes/default/Chat.css",
+    "inputFile": "Content/themes/default/Chat.less"
   }
 ]

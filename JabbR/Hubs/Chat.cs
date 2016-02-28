@@ -227,7 +227,7 @@ namespace JabbR
         public bool SeekVideo(double currenttime, string roomName)
         {
             CheckStatus();
-            Clients.Group(roomName).updateVideoLocation();
+            Clients.Group(roomName).updateVideoLocation(currenttime, roomName);
             return true;
         }
 

@@ -1171,7 +1171,12 @@
     </Content>
     <Content Include="Content\sounds\notification.mp3" />
     <Content Include="Content\themes\default\Chat.bbcnews.css" />
-    <Content Include="Content\themes\default\Chat.css" />
+    <Content Include="Content\themes\default\Chat-max-width-900.less" />
+    <Content Include="Content\themes\default\Chat-max-width-768.less" />
+    <Content Include="Content\themes\default\Chat-max-width-700.less" />
+    <Content Include="Content\themes\default\Chat-max-width-580.less" />
+    <Content Include="Content\themes\default\Chat-max-width-480.less" />
+    <None Include="Content\themes\default\Chat.less" />
     <Content Include="Chat.documentOnWrite.js" />
     <Content Include="Chat.js" />
     <Content Include="Chat.toast.js" />
@@ -1234,7 +1239,13 @@
     <Content Include="Content\popup-back.gif" />
     <Content Include="Content\qunit.css" />
     <Content Include="Chat.githubissues.js" />
+    <Content Include="Content\themes\default\Chat.css">
+      <DependentUpon>Chat.less</DependentUpon>
+    </Content>
     <Content Include="Content\themes\default\Chat.githubissues.css" />
+    <Content Include="Content\themes\default\Chat.min.css">
+      <DependentUpon>Chat.css</DependentUpon>
+    </Content>
     <Content Include="Content\themes\default\Chat.nuget.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />

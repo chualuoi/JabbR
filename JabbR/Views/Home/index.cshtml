@@ -332,26 +332,28 @@
     <!--/Gravatar Profile Template-->
 
     <!--Media player template-->
-    <script id="media-player-template" type="text/x-jquery-tmpl">
-        <div class="media-player-container" style="position: absolute">
-            <iframe class="media-player" height="360" width="640" src="${src}">
-            </iframe>
-            <div class="media-controls">
-                <div class="slider ng-isolate-scope">
-                    <div class="track"></div>
-                    <div class="statusTrack"></div>
-                    <div class="leftTrack"></div>
-                    <div class="bubble"><div class="label ng-binding"></div></div>
+<script id="media-player-template" type="text/x-jquery-tmpl">
+    <div class="media-player-container" style="position: absolute">
+        <iframe class="media-player" height="360" width="640" src="${src}" id="${id}">
+        </iframe>
+        <div class="media-controls">
+            <div class="slider ng-isolate-scope">
+                <div class="track"></div>
+                <div class="statusTrack"></div>
+                <div class="leftTrack"></div>
+                <div class="bubble">
+                    <div class="label"></div>
                 </div>
-                <nav class="navbar navbar-default" role="navigation">
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-
+            </div>
+            <nav class="navbar navbar-default" role="navigation">
+                <div class="container-fluid">
+                    <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav">
                             <li>
-                                <button type="button" class="btn btn-default navbar-btn">
+                                <button type="button" class="btn btn-default">
                                     <i class="fa fa-fw fa-play"></i>
                                 </button>
-                                <button type="button" class="btn btn-default navbar-btn ng-hide">
+                                <button type="button" class="btn btn-default">
                                     <i class="fa fa-fw fa-pause"></i>
                                 </button>
                             </li>
@@ -361,11 +363,6 @@
                                     <i class="fa fa-fw fa-fast-forward"></i>
                                 </button>
                             </li>
-
-                            <li>
-                                <p class="navbar-text ng-binding"></p>
-                            </li>
-
                             <li>
                                 <p class="navbar-text">
                                     <i class="fa fa-fw fa-volume-up"></i>
@@ -373,22 +370,23 @@
 
                                 <div class="navbar-volume-slider slider ng-isolate-scope">
                                     <div class="track"></div>
-                                    <div class="statusTrack" style="width: 0px;"></div>
-                                    <div class="leftTrack" style="width: 98px;"></div>
-                                    <div class="bubble" style="left: 83px;"><div class="label ng-binding"></div></div>
+                                    <div class="statusTrack" ></div>
+                                    <div class="leftTrack" ></div>
+                                    <div class="bubble"><div class="label"></div></div>
                                 </div>
                             </li>
                         </ul>
 
-                        <ul class="nav navbar-nav navbar-right">
+                        <ul class="nav navbar-nav pull-right">
                             <li class="dropdown" data-dropdown="">
                                 <a href="#" class="dropdown-toggle" data-dropdown-toggle="" aria-haspopup="true" aria-expanded="false">
-                                    <span data-ng-bind-html="videoQualityNames[currentQualityLevel]" class="ng-binding">480p</span>&nbsp;<span class="fa fa-caret-down"></span>
+                                    <span>480p</span>&nbsp;<span class="fa fa-caret-down"></span>
                                 </a>
                                 <ul class="dropdown-menu" role="menu"></ul>
                             </li>
                         </ul>
                     </div>
+                </div>                   
                 </nav>
             </div>
         </div>

@@ -402,8 +402,22 @@
                               .addClass('roomTopic')
                               .appendTo($chatArea)
                               .hide();
-        templates.mediaContainer.tmpl({ src: "http://www.youtube.com/embed/nOEw9iiopwI" })
+        var mediaPlayerId = 'media-player-' + roomId;
+        templates.mediaContainer.tmpl({ src: "http://www.youtube.com/embed/nOEw9iiopwI?enablejsapi=1", id: mediaPlayerId })
             .appendTo($chatArea);
+
+        var onPlayerReady = function (event) {
+            console.log('Ready to play youtube video');
+            event.target.playVideo();
+        }
+        var player = new YT.Player(mediaPlayerId, {
+            videoId: 'nOEw9iiopwI',
+            events: {
+                'onReady': onPlayerReady
+            }
+        });
+
+        $('#' + mediaPlayerId).data('player', player);
 
         userContainer = $('<div/>').attr('id', 'userlist-' + roomId)
             .addClass('users')
@@ -759,7 +773,7 @@
     }
 
     function triggerSeekVideo(currentTime) {
-        $ui.trigger($ui.events.seekVideo, [currentTime])
+        $ui.trigger(ui.events.seekVideo, [currentTime]);
     };
 
     
@@ -904,7 +918,16 @@
                     $ui.trigger(ui.events.openRoom, [roomName]);
                 }
             };
-            
+
+            $document.on('click', '.slider', function() {
+                var currentRoom = getCurrentRoomElements();
+                var mediaPlayerId = '#media-player-' + getRoomId(currentRoom.getName());
+                var player = $(mediaPlayerId).data('player');
+                //Calculate time
+                //var duration = player.getDuration();
+                player.seekTo(6);
+                triggerSeekVideo(6);
+            });
             $document.on('click', 'li.room .room-row', function () {
                 var roomName = $(this).parent().data('name');
                 activateOrOpenRoom(roomName);
@@ -2597,8 +2620,11 @@
         },
         updateVideoLocation: function (currentTime, roomName) {
             var room = getRoomElements(roomName);
-            var mediaPlayer = $(room.mediaPlayer).mediaelementplayer();
-            mediaPlayer.setCurrentTime(currentTime);
+            var mediaPlayerId = '#media-player-' + getRoomId(room.getName());
+            var player = $(mediaPlayerId).data('player');
+            //var mediaPlayer = $(room.mediaPlayer).mediaelementplayer();
+            //mediaPlayer.setCurrentTime(currentTime);
+            player.seekTo(currentTime);
         }
     };
 
