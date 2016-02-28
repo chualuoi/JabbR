@@ -14,6 +14,7 @@
     <link href="@Url.Content("~/Content/images/logo32.png")" rel="icon" type="image/png" sizes="32x32">
     <link href="@Url.Content("~/Content/images/logo64.png")" rel="icon" type="image/png" sizes="64x64">
     <link href="@Url.Content("~/favicon.ico")" rel="shortcut icon" type="image/x-icon" sizes="16x16">
+    <link href="~/Content/mediaelementplayer.min.css" rel="stylesheet" />
     @{ 
         WriteLiteral(Bundle.Css().ForceDebugIf(() => Model.DebugMode)
             .Add("~/Content/bootstrap.min.css")
@@ -328,6 +329,70 @@
         </div>
     </script>
     <!--/Gravatar Profile Template-->
+
+    <!--Media player template-->
+    <script id="media-player-template" type="text/x-jquery-tmpl">
+        <div class="media-player-container" style="position: absolute">
+            <iframe class="media-player" height="360" width="640" src="${src}">
+            </iframe>
+            <div class="media-controls">
+                <div class="slider ng-isolate-scope">
+                    <div class="track"></div>
+                    <div class="statusTrack"></div>
+                    <div class="leftTrack"></div>
+                    <div class="bubble"><div class="label ng-binding"></div></div>
+                </div>
+                <nav class="navbar navbar-default" role="navigation">
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                        <ul class="nav navbar-nav">
+                            <li>
+                                <button type="button" class="btn btn-default navbar-btn">
+                                    <i class="fa fa-fw fa-play"></i>
+                                </button>
+                                <button type="button" class="btn btn-default navbar-btn ng-hide">
+                                    <i class="fa fa-fw fa-pause"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button class="btn btn-default navbar-btn">
+                                    <i class="fa fa-fw fa-fast-forward"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <p class="navbar-text ng-binding"></p>
+                            </li>
+
+                            <li>
+                                <p class="navbar-text">
+                                    <i class="fa fa-fw fa-volume-up"></i>
+                                </p>
+
+                                <div class="navbar-volume-slider slider ng-isolate-scope">
+                                    <div class="track"></div>
+                                    <div class="statusTrack" style="width: 0px;"></div>
+                                    <div class="leftTrack" style="width: 98px;"></div>
+                                    <div class="bubble" style="left: 83px;"><div class="label ng-binding"></div></div>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown" data-dropdown="">
+                                <a href="#" class="dropdown-toggle" data-dropdown-toggle="" aria-haspopup="true" aria-expanded="false">
+                                    <span data-ng-bind-html="videoQualityNames[currentQualityLevel]" class="ng-binding">480p</span>&nbsp;<span class="fa fa-caret-down"></span>
+                                </a>
+                                <ul class="dropdown-menu" role="menu"></ul>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </script>
+    <!--/Media player template-->
 </head>
 <body class="home@(Model.IsAdmin ? " home-admin" : "")">
     <section id="page" role="application">
@@ -566,6 +631,8 @@
         @Html.Raw(Model.ClientLanguageResources)
       };
     </script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+  
     @{
         WriteLiteral(Bundle.JavaScript().ForceDebugIf(() => Model.DebugMode)
             .Add("~/Scripts/jQuery.tmpl.min.js")
@@ -592,6 +659,7 @@
             .Add("~/Chat.githubissues.js")
             .Add("~/Chat.js")
             .Add("~/loader.js")
+            .Add("~/Scripts/mediaelement-and-player.min.js")
             .Render("~/Scripts/JabbR2_#.js"));
     }
     @if (Model.DebugMode)
