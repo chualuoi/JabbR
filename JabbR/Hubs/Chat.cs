@@ -224,6 +224,13 @@ namespace JabbR
             return true;
         }
 
+        public bool SeekVideo(double currenttime, string roomName)
+        {
+            CheckStatus();
+            Clients.Group(roomName).updateVideoLocation();
+            return true;
+        }
+
         private void AddMentions(ChatMessage message)
         {
             var mentionedUsers = new List<ChatUser>();
