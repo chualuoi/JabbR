@@ -919,14 +919,18 @@
                 }
             };
 
-            $document.on('click', '.slider', function() {
+            $document.on('click', '.slider', function(e) {
                 var currentRoom = getCurrentRoomElements();
                 var mediaPlayerId = '#media-player-' + getRoomId(currentRoom.getName());
                 var player = $(mediaPlayerId).data('player');
                 //Calculate time
-                //var duration = player.getDuration();
-                player.seekTo(6);
-                triggerSeekVideo(6);
+                var duration = player.getDuration();
+                var fullwidth = $(this).width();
+                var relativeClickX = e.offsetX - $(this).offset().left;
+
+                var seekTime = relativeClickX * duration / fullwidth;
+                player.seekTo(seekTime);
+                triggerSeekVideo(seekTime);
             });
             $document.on('click', 'li.room .room-row', function () {
                 var roomName = $(this).parent().data('name');

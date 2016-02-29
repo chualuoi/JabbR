@@ -1,4 +1,7 @@
-﻿.media-controls .slider {
+﻿.media-controls {
+  width: 640px;
+}
+.media-controls .slider {
   border: 1px solid #ccc;
   cursor: pointer;
 }
